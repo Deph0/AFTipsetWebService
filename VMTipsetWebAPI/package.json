@@ -1,0 +1,31 @@
+{
+  "name": "afvmtipset",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "ejs": "~2.5.6",
+    "express": "~4.15.2",
+    "morgan": "~1.8.1",
+    "mysql": "^2.14.1",
+    "serve-favicon": "~2.4.2"
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Deph0/AFTipsetWebService.git"
+  },
+  "author": "Andreas Kramer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Deph0/AFTipsetWebService/issues"
+  },
+  "homepage": "https://github.com/Deph0/AFTipsetWebService#readme",
+  "description": ""
+}
