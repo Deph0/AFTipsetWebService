@@ -1,67 +1,62 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mysql= require('mysql');
-var http = require('http');
+const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const logger = require('morgan')
+const helmet = require('helmet')
+const cors = require('cors')
+const sanitize = require('sanitize')
 
-var config = require('./config.json');
+const index = require('./routes/index')
+const files = require('./routes/files')
+const bears = require('./routes/bears')
+const books = require('./routes/books')
+const vmusers = require('./routes/vmusers')
+const vmresults = require('./routes/vmresults')
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var resultmatches = require('./routes/resultmatches.js');
-var resultteams = require('./routes/resultteams.js');
-var resultscorers = require('./routes/resultscorers.js');
-var result = require('./routes/result.js');
-
-var app = express();
+const app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-//Database connection
-app.use(function(req, res, next){
-	global.connection = mysql.createConnection(config.database);
-	connection.connect();
-	next();
-});
-app.use('/', index);
-app.use('/api/v1/users', users);
-app.use('/api/v1/result/matches', resultmatches);
-app.use('/api/v1/result/teams', resultteams);
-app.use('/api/v1/result/scorers', resultscorers);
-app.use('/api/v1/result', result);
+app.use(logger('dev')) // log requests to the console
+app.use(helmet()) // Add security to the app
+app.use(cors()) // Add Cross-origin resource sharing to the app
+app.use(sanitize.middleware) // sanitize user inputs
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(cookieParser())
+// serve static files (eg images, styles, etc)
+// app.use(express.static(path.join(__dirname, 'public')))
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// helmet & other tips for security:
+// https://nodesource.com/blog/nine-security-tips-to-keep-express-from-getting-pwned/
+// https://github.com/pocketly/node-sanitize
 
+const router = express.Router()
+router.use('/files', files)
+router.use('/bears', bears)
+router.use('/books', books)
 
+/*
+/api/v1/users
+/api/v1/result
+/api/v1/result/matches
+/api/v1/result/teams
+/api/v1/result/scorers
+*/
+router.use('/users', vmusers)
+router.use('/result', vmresults)
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use('/', index)
+app.use('/api/v1', router)
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// START THE SERVER
+const port = process.env.PORT || 8080 // set port, either by env or default
+const listener = app.listen(port, () => {
+  console.log('Express server listening on port %d in %s mode', listener.address().port, app.settings.env)
+})
 
-module.exports = app;
-var server = http.createServer(app);
-server.listen(4001);
+// insperation from https://github.com/scotch-io/node-api/blob/master/server.js
+// from guide: https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4

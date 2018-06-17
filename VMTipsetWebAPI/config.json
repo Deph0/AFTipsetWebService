@@ -1,8 +1,9 @@
 {
-    "database": {
-        "host" : "localhost",
-        "user" : "root",
-        "password" : "",
-        "database" : ""
-    }
+  "database": {
+    "host": "localhost",
+    "port": "3307",
+    "user": "",
+    "password": "",
+    "database": ""
+  }
 }
