@@ -1,31 +1,24 @@
 {
-  "name": "afvmtipset",
+  "name": "afvmtipswebapi",
   "version": "1.0.0",
-  "private": true,
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "ejs": "~2.5.6",
-    "express": "~4.15.2",
-    "morgan": "~1.8.1",
-    "mysql": "^2.14.1",
-    "serve-favicon": "~2.4.2"
-  },
-  "main": "app.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Deph0/AFTipsetWebService.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Andreas Kramer",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Deph0/AFTipsetWebService/issues"
-  },
-  "homepage": "https://github.com/Deph0/AFTipsetWebService#readme",
-  "description": ""
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "helmet": "^3.12.1",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "path": "^0.12.7",
+    "sanitize": "^2.1.0"
+  }
 }
