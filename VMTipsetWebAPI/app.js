@@ -13,6 +13,7 @@ const bears = require('./routes/bears')
 const books = require('./routes/books')
 const vmusers = require('./routes/vmusers')
 const vmresults = require('./routes/vmresults')
+const vmgames = require('./routes/vmgames')
 
 const app = express()
 
@@ -41,6 +42,7 @@ router.use('/books', books)
 
 /*
 /api/v1/users
+/api/v1/games
 /api/v1/result
 /api/v1/result/matches
 /api/v1/result/teams
@@ -48,6 +50,7 @@ router.use('/books', books)
 */
 router.use('/users', vmusers)
 router.use('/result', vmresults)
+router.use('/games', vmgames)
 
 app.use('/', index)
 app.use('/api/v1', router)
