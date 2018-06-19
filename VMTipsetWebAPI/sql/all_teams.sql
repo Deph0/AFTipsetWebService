@@ -5,7 +5,7 @@ Select U.UserSign,
         CASE T.StageQualify3 WHEN UT.StageQualify3 THEN T.StageOdds3 ELSE 0 END +
         CASE T.StageQualify4 WHEN UT.StageQualify4 THEN T.StageOdds4 ELSE 0 END +
         CASE T.StageQualify5 WHEN UT.StageQualify5 THEN T.StageOdds5 ELSE 0 END
-    ),2) TeamResult
+    ),2) AS TeamResult
 From TP_USERS AS U
 Inner Join TP_USER_TIP_TEAMS AS UT on UT.UserID = U.UserID
 Inner Join TP_TEAMS AS T on T.CompID = UT.CompID and T.TeamNo = UT.TeamNo

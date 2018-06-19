@@ -10,10 +10,10 @@ router.route('/')
     const sql = fs.readFileSync(path.join(__dirname, '../sql', 'all_results.sql'), 'utf8').toString()
     database.query(sql, (err, results, fields) => {
       if (err) {
-       // If there is error, we send the error in the error section with 500 status
+        // If there is error, we send the error in the error section with 500 status
         res.send(JSON.stringify({'status': 500, 'error': err, 'response': null}))
       } else {
-       // If there is no error, all is good and response is 200OK.
+        // If there is no error, all is good and response is 200OK.
         res.send(JSON.stringify({'status': 200, 'error': null, 'response': results}))
       }
     })

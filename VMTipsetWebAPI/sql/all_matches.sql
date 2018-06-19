@@ -1,18 +1,13 @@
-SELECT U.usersign,
-    Round(Sum(CASE M.result1x2
-                WHEN '1' THEN M.oddsresult1
-                WHEN 'X' THEN M.oddsresultx
-                WHEN '2' THEN M.oddsresult2
-                ELSE 0
-            end), 2) MatchResult
-FROM   tp_users AS U
-    INNER JOIN tp_user_tip_matches AS UM
-            ON UM.userid = U.userid
-    INNER JOIN tp_matches AS M
-            ON M.compid = UM.compid
-            AND M.matchno = UM.matchno
-            AND M.result1x2 = UM.matchtip
-WHERE  UM.compid = (SELECT Max(compid)
-                FROM   tp_competitions)
-GROUP  BY U.usersign
-ORDER  BY 2 DESC
+SELECT U.UserSign
+    , UM.MatchTip
+    , M.Result1X2
+    , M.MatchNo
+    , TH.TeamName
+    , TA.TeamName
+FROM tp_users AS U
+JOIN tp_user_tip_matches AS UM ON UM.UserID = U.UserID
+JOIN tp_matches AS M ON M.MatchNo = UM.MatchNo  AND M.CompID = UM.CompID /*AND M.result1x2 = UM.MatchTip*/
+JOIN tp_teams as TH on TH.TeamNo = M.HomeTeamNo and TH.CompID = UM.CompID
+JOIN tp_teams as TA on TA.TeamNo = M.AwayTeamNo and TA.CompID = UM.CompID
+WHERE UM.CompID = (SELECT Max(CompID) FROM tp_competitions)
+order by M.MatchNo
