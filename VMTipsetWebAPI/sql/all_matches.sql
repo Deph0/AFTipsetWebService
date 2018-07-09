@@ -2,8 +2,8 @@ SELECT U.UserSign
     , UM.MatchTip
     , M.Result1X2
     , M.MatchNo
-    , TH.TeamName
-    , TA.TeamName
+    , TH.TeamName as HomeTeam
+    , TA.TeamName as AwayTeam
 FROM tp_users AS U
 JOIN tp_user_tip_matches AS UM ON UM.UserID = U.UserID
 JOIN tp_matches AS M ON M.MatchNo = UM.MatchNo  AND M.CompID = UM.CompID /*AND M.result1x2 = UM.MatchTip*/
